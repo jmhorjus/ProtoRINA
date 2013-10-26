@@ -1,0 +1,41 @@
+//copyright 2013 Computer Science Department, Recursive InterNetworking Architecture (RINA) laboratory, Boston University.
+//All rights reserved. Permission to use, copy, modify, and distribute this software and its documentation for any purpose 
+//and without fee is hereby granted, provided that the above copyright notice appear in all copies and that both the 
+//copyright notice and this permission notice appear in supporting documentation. The RINA laboratory of the Computer 
+//Science Department at Boston University makes no representations about the suitability of this software for any purpose.
+//It is provided "as is" without express or implied warranty.
+
+package rina.object.gpb;
+
+import "ApplicationProcessNamingInfoMessage.proto";
+
+
+// Message types.
+enum opCode_t {
+	Request = 0;
+	Response = 1;
+       Register = 2;
+
+}
+
+message iddResponse_t{
+ 	optional string difName = 1;
+	optional rina.object.gpb.applicationProcessNamingInfo_t ipcProcessNameInfo = 2;
+	repeated string supportingDIFNames = 3;
+
+
+}
+
+message iddMessage_t{  
+	required opCode_t opCode = 1;
+        optional uint32 result = 2;
+        optional rina.object.gpb.applicationProcessNamingInfo_t applicationNameInfo = 3;
+        optional uint32 hopCount = 4;
+	optional uint64 timeStamp = 5;
+	repeated iddResponse_t iddResponse = 6;
+	optional string difName = 7; // query for authenticator of a certain DIF
+	repeated rina.object.gpb.applicationProcessNamingInfo_t authenticatorNameInfo = 8;
+	// all IPC processes that can enroll new members
+               
+	
+}

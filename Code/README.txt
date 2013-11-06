@@ -12,19 +12,19 @@ author Yuefeng Wang. Computer Science Department, Boston University
 ====================================================================
 
 (1) All source codes are under the ¡°src¡± directory. Simple demos¡¯ source codes are included 
-in this directory. See the configuration files in ¡°experimentConfigFiles¡± directory for details 
-about demos¡¯ setup. 
+in this directory. See the configuration files in ¡°experimentConfigFiles¡± directory for 
+details about demos¡¯ setup. 
 
    (A) ¡°a_simple_demo¡±: There are two RINA nodes, and each has one application process and one 
-IPC presses. Node 2¡¯ s application process ¡°dummyApp2¡± allocates a flow to Node 1¡¯s application 
-process ¡°dummyApp1¡± using the underlying DIF¡¯s communication services, and the DIF has two IPC 
-processes. Node 1¡¯s IPC process ¡°BostonU1¡± is the first member in the DIF, and Node 2¡¯s IPC 
-process ¡°BostonU2¡± is enrolled by ¡±BostonU1¡±.
+IPC presses. Node 2¡¯ s application process ¡°dummyApp2¡± allocates a flow to Node 1¡¯s 
+application process ¡°dummyApp1¡± using the underlying DIF¡¯s communication services, and the
+DIF has two IPC processes. Node 1¡¯s IPC process ¡°BostonU1¡± is the first member in the DIF,
+and Node 2¡¯s IPC process ¡°BostonU2¡± is enrolled by ¡±BostonU1¡±.
 
-   (B) ¡°a_routing_demo¡±: There are five RINA nodes, and each has one IPC process. All those five 
-IPC processes are members of the same DIF. This demo shows how RINA routing works inside the 
-DIF. This is the DIF setup used in the RINA video application example in the manual. See the 
-manual for more details.  
+   (B) ¡°a_routing_demo¡±: There are five RINA nodes, and each has one IPC process. All those 
+five IPC processes are members of the same DIF. This demo shows how RINA routing works 
+inside the DIF. This is the DIF setup used in the RINA video application example in the
+manual. See the manual for more details.  
 
    (C) ¡°a_ddf_demo¡±: Thera are three RINA nodes, and each has one application process. Node 1 
 and Node 3 have one IPC process on it, and Node 2 have two IPC processes on it. Node 1¡¯s 
@@ -36,16 +36,16 @@ relay service to ¡°app3¡±. The newly created DIF will provided the communication
  
    (D) ¡°a¡±_video_demo: There are two RINA nodes, and each has one application process and one 
 IPC process. One has a RINA video streaming server proxy and the other has a RINA video 
-steaming client proxy. Server proxy is connected to client proxy using the communication service 
-provided by the underlying DIF. Once two proxies are connected, user can use a video 
-application, such as VLC player to retrieve the video served on live555 video server 
+steaming client proxy. Server proxy is connected to client proxy using the communication 
+service provided by the underlying DIF. Once two proxies are connected, user can use a 
+video application, such as VLC player to retrieve the video served on live555 video server 
 application. See RINA video streaming application in the manual for details. 
 
 	
-   (E) ¡°a_mobility_demo¡±: There are two RINA nodes. Node 2 has two IPC processes belonging to two
-DIFs. Node 1 is a moving node, at the beginning it uses one IPC in the first DIF to talk to Node 2.
-Then Node 1 moves to another location, then uses another IPC process of another DIF to talk to Node
-2. This demo shows the simple case for mobility in RINA. 
+   (E) ¡°a_mobility_demo¡±: There are two RINA nodes. Node 2 has two IPC processes belonging 
+to two DIFs. Node 1 is a moving node, at the beginning it uses one IPC in the first DIF to 
+talk to Node 2. Then Node 1 moves to another location, then uses another IPC process of 
+another DIF to talk to Node 2. This demo shows the simple case for mobility in RINA. 
 
 
 (2) All included libraries are under the ¡°lib¡± directory. 

@@ -20,7 +20,7 @@ public class HandleEntry
 	private Log log = LogFactory.getLog(this.getClass());
 
 	private int handleID;
-	
+
 	private String srcApName;
 	private String srcApInstance;
 	private String srcAeName;
@@ -72,7 +72,7 @@ public class HandleEntry
 		this.wireID = wireID;
 
 	}
-	
+
 	public HandleEntry(String srcApName, String srcApInstance,String srcAeName, String srcAeInstance
 			, String dstApName,String dstApInstance, String dstAeName, String dstAeInstance,
 			String underlyingIPCName, String underlyingIPCInstance, int handleID)
@@ -85,46 +85,48 @@ public class HandleEntry
 		this.dstApInstance = dstApInstance;
 		this.dstAeName = dstAeName;
 		this.dstAeInstance = dstAeInstance;
-		
+
 		this.underlyingIPCName = underlyingIPCName;
 		this.underlyingIPCInstance = underlyingIPCInstance;
-		
+
 		this.handleID = handleID;
 	}
-	
+
 	public HandleEntry(String srcApName, String dstApName, String underlyingIPCName, String underlyingIPCInstance, int handleID)
 	{
 		this.srcApName = srcApName;
 		this.dstApName = dstApName;
-		
+
 		this.underlyingIPCName = underlyingIPCName;
 		this.underlyingIPCInstance = underlyingIPCInstance;
-		
+
 		this.handleID = handleID;
 	}
-	
+
 	public HandleEntry(String srcApName, String srcAeName, String dstApName, String dstAeName,  String underlyingIPCName, String underlyingIPCInstance, int handleID)
 	{
 		this.srcApName = srcApName;
 		this.srcAeName = srcAeName;
 		this.dstApName = dstApName;
 		this.dstAeName = dstAeName;
-		
+
 		this.underlyingIPCName = underlyingIPCName;
 		this.underlyingIPCInstance = underlyingIPCInstance;
-		
+
 		this.handleID = handleID;
 	}
-	
-	
+
+
 	public String getKey()
 	{
 		String key  = null;
+
+		key = this.srcApName  + this.srcApInstance + this.srcAeName +  this.srcAeInstance
+				+ this.dstApName  +  this.dstApInstance  +this.dstAeName + this.dstAeInstance;
+
+		this.log.debug("key in the handle entry is " + key);
 		
-			key = this.srcApName  + this.srcApInstance + this.srcAeName +  this.srcAeInstance
-			+ this.dstApName  +  this.dstApInstance  +this.dstAeName + this.dstAeInstance;
-			
-			return key;
+		return key;
 	}
 
 	public void print()

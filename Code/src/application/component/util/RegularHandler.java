@@ -40,6 +40,8 @@ public class RegularHandler extends Thread{
 
 	private HandleEntry handleEntry = null;
 
+	private boolean sendBack = false;
+
 	public RegularHandler(int handleID, IPCResourceManagerImpl ipcManager,HandleEntry handleEntry , RIBImpl rib )
 	{
 		this.handleID = handleID;
@@ -52,6 +54,17 @@ public class RegularHandler extends Thread{
 
 	}
 
+	//This constructor is used when it receives something, and does not want to send anything back
+	public RegularHandler(int handleID, IPCResourceManagerImpl ipcManager)
+	{
+		this.handleID = handleID;
+		this.ipcManager = ipcManager;
+		this.sendBack = false;
+		this.start();
+
+	}
+
+
 
 	public void run()
 	{
@@ -61,8 +74,37 @@ public class RegularHandler extends Thread{
 		{
 			byte[] msg =  this.ipcManager.receive(this.handleID);
 
+			String msgContent = new String (msg);
 
-			this.log.debug("MMMMMMMMMMMMMMMMMMMMMMMMsg  content is " + new String(msg));
+			this.log.debug("MMMMMMMMMMMMMMMMMMMMMMMMsg  content is " + msgContent);
+
+			if(this.sendBack == true)
+			{
+				//NOTE: this is for tesing purpose only
+				//to send message back to the sender , n times
+			
+				int n = 10;
+				for(int i = 0; i< n; i++)
+				{
+					String newMsg = msgContent + ": new " + i;
+					
+					try {
+						this.ipcManager.send(this.handleID, newMsg.getBytes());
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+
 
 		}
 

@@ -11,7 +11,7 @@ author Yuefeng Wang. Computer Science Department, Boston University
 
 ====================================================================
 
-(1) All source codes are under the ¡°src¡± directory. Four simple demos¡¯ source codes are included 
+(1) All source codes are under the ¡°src¡± directory. Simple demos¡¯ source codes are included 
 in this directory. See the configuration files in ¡°experimentConfigFiles¡± directory for details 
 about demos¡¯ setup. 
 
@@ -40,6 +40,13 @@ steaming client proxy. Server proxy is connected to client proxy using the commu
 provided by the underlying DIF. Once two proxies are connected, user can use a video 
 application, such as VLC player to retrieve the video served on live555 video server 
 application. See RINA video streaming application in the manual for details. 
+
+	
+   (E) ¡°a_mobility_demo¡±: There are two RINA nodes. Node 2 has two IPC processes belonging to two
+DIFs. Node 1 is a moving node, at the beginning it uses one IPC in the first DIF to talk to Node 2.
+Then Node 1 moves to another location, then uses another IPC process of another DIF to talk to Node
+2. This demo shows the simple case for mobility in RINA. 
+
 
 (2) All included libraries are under the ¡°lib¡± directory. 
 

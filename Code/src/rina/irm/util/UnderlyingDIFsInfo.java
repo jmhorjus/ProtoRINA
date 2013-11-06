@@ -82,8 +82,12 @@ public class UnderlyingDIFsInfo {
 			IPCImpl ipc = this.underlyingIPCs.get(ipcID);
 
 			this.underlyingIPCs.remove(ipcID);
+			this.underlyingIPCList.remove(ipc);
 
-			ipc.deregisterApplication(this.apInfo);
+			//for now we don't unregister the ap from the ipc
+			//as when IPC is removed, it most like means the applicaiotn cannot use the ipc anymore.
+			
+			//ipc.deregisterApplication(this.apInfo);
 
 			this.log.info("underlying IPC (" + IPCName + "/" + IPCInstance  + ") removed");
 		}else

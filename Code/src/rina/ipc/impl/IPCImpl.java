@@ -55,21 +55,21 @@ public class IPCImpl extends Thread implements IPC  {
 	private String IPCInstance = null;
 	private String DIFName = null;
 	private int IPCLevel = -1;
-	
+
 	//IPC process can be considered as an application
 	//apInfo is used when the IPC is using other IPC processes as underlying IPC process
 	//when this IPC can be seen as an application
 	private ApplicationProcessNamingInfo apInfo = null;
-	
-	
+
+
 	//this is the place where underlying  IPCs give feed back  to application, mainly incoming flow creation 
 	// all underlying IPCs can access this message queue
 	private FlowInfoQueue flowInfoQueue = null;
-	
-	private boolean listen = true;
-	
 
-	
+	private boolean listen = true;
+
+
+
 	/**
 	 * It contains all the underlying DIFs of this IPC,and this info will be used when joining the DIF, 
 	 * The enroller will based on this information to tell who is direct neighbor
@@ -87,10 +87,10 @@ public class IPCImpl extends Thread implements IPC  {
 	private String routingProtocol = null;
 
 	private String linkCostPolicy = null;
-	
+
 	//policy to generate address for new members
 	private String addressPolicy = null;
-	
+
 
 
 	public IPCImpl(String configurationFile)
@@ -106,13 +106,13 @@ public class IPCImpl extends Thread implements IPC  {
 		this.DIFName = this.config.getDIFName();
 		this.IPCInstance = this.config.getIPCInstance();
 		this.IPCLevel = Integer.parseInt(this.config.getIPCLevel().trim());
-		
+
 		this.apInfo = new ApplicationProcessNamingInfo( this.IPCName,  this.IPCInstance);
 		this.rib.addAttribute("apInfo", this.apInfo);
-		
+
 		this.flowInfoQueue = new FlowInfoQueue();
 		this.rib.addAttribute("flowInfoQueue", this.flowInfoQueue);
-		
+
 		this.enrolled  = this.config.getEnrolledState();
 		this.underlyingDIFs = this.config.getUnderlyingDIFs();
 
@@ -121,12 +121,12 @@ public class IPCImpl extends Thread implements IPC  {
 
 		this.linkCostPolicy = this.config.getLinkCostPolity();
 		this.rib.addAttribute("linkCostPolicy", this.linkCostPolicy);
-		
-		
+
+
 		this.addressPolicy = this.config.getAddressPolicy();
 		this.rib.addAttribute("addressPolicy", this.addressPolicy);
-		
-		
+
+
 
 
 
@@ -196,8 +196,8 @@ public class IPCImpl extends Thread implements IPC  {
 	 */
 	public IPCImpl(RINAConfig config, LinkedList<IPCImpl>  underlyigIPCList)
 	{
-		
-	    this.config = config;
+
+		this.config = config;
 
 		this.rib = new RIBImpl();
 		this.rib.addAttribute("config",  config);
@@ -207,13 +207,13 @@ public class IPCImpl extends Thread implements IPC  {
 		this.DIFName = this.config.getDIFName();
 		this.IPCInstance = this.config.getIPCInstance();
 		this.IPCLevel = Integer.parseInt(this.config.getIPCLevel().trim());
-		
+
 		this.apInfo = new ApplicationProcessNamingInfo( this.IPCName,  this.IPCInstance);
 		this.rib.addAttribute("apInfo", this.apInfo);
-		
+
 		this.flowInfoQueue = new FlowInfoQueue();
 		this.rib.addAttribute("flowInfoQueue", this.flowInfoQueue);
-	
+
 		this.enrolled  = this.config.getEnrolledState();
 		this.underlyingDIFs = this.config.getUnderlyingDIFs();
 
@@ -222,7 +222,7 @@ public class IPCImpl extends Thread implements IPC  {
 
 		this.linkCostPolicy = this.config.getLinkCostPolity();
 		this.rib.addAttribute("linkCostPolicy", this.linkCostPolicy);
-		
+
 		this.addressPolicy = this.config.getAddressPolicy();
 		this.rib.addAttribute("addressPolicy", this.addressPolicy);
 
@@ -281,7 +281,7 @@ public class IPCImpl extends Thread implements IPC  {
 		this.dae = new DataTransferAE(this.IPCName, this.IPCInstance, "1", this.rib, this.irm);	
 		this.mae = new ManagementAE(this.IPCName, this.IPCInstance, "1", this.rib, this.irm); 
 
-	
+
 		//if this IPC is a authenticator then register itself to IDD, such that new member could find it and join
 		//the DIF through it.
 		if(this.enrolled == true) 
@@ -291,11 +291,11 @@ public class IPCImpl extends Thread implements IPC  {
 
 	}
 
-	
+
 	public void run()
 	{
 		this.log.debug("IPC process started");
-		
+
 		while(this.listen)
 		{
 			Flow flow = this.flowInfoQueue.getFlowInfo();
@@ -303,8 +303,8 @@ public class IPCImpl extends Thread implements IPC  {
 			//create a handle for the incoming flow request
 
 			int handleID = this.irm.addIncomingHandle(flow);
-	
-	
+
+
 		}
 	}
 
@@ -385,15 +385,18 @@ public class IPCImpl extends Thread implements IPC  {
 	// then send to all its neighbors
 	public void registerApplication(ApplicationProcessNamingInfo apInfo, FlowInfoQueue flowInfoQueue) {
 
-		System.out.println("ccccccccccccccccc" +  apInfo.getPrint() );
-		
+		//System.out.println("ccccccccccccccccc" +  apInfo.getPrint() );
+
 		this.mae.registerApplication( apInfo,  flowInfoQueue);
 
 	}
 
 
 	public void deregisterApplication(ApplicationProcessNamingInfo apInfo) {
-		// TODO Auto-generated method stub
+		
+		//TODO
+		this.log.info("deregisterApplication method is called. apinfo is " + apInfo.getPrint());
+		
 
 	}
 
@@ -457,7 +460,7 @@ public class IPCImpl extends Thread implements IPC  {
 		{
 			appRecord.addSupportingDIFNames(this.underlyingDIFs.get(i));
 		}
-		
+
 		iddRegMsg.addIddResponse(appRecord.buildPartial());
 
 		iddRegMsg.setTimeStamp(System.currentTimeMillis());		
@@ -471,11 +474,11 @@ public class IPCImpl extends Thread implements IPC  {
 		this.mae.registerToIDD(iddRegMsg);
 	}
 
-	
+
 	public void addIPC(IPCImpl ipc) {
-		
+
 		this.irm.addIPC(ipc);
-		
+
 	}
 
 

@@ -664,8 +664,6 @@ public class ManagementAE extends ApplicationEntity {
 
 	// this ipc first stores this in its RIB forwardingDirectory,
 	// then send to all its neighbors
-
-
 	public void registerApplication(ApplicationProcessNamingInfo apInfo, FlowInfoQueue flowInfoQueue) {
 
 		this.log.info("registerApplication() is called");

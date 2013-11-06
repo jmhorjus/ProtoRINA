@@ -142,12 +142,12 @@ public class RIBImpl implements RIBAPI {
 
 		if(this.nameToAddr.containsKey(name))
 		{
-			this.log.debug("The IPC process("  +  ipcName + "/" + ipcInstance + ")was a member before.");
+			this.log.debug("The IPC process("  +  ipcName + "/" + ipcInstance + ")was a member before with address" +  rinaAddr);
 			this.removeMember(name);// remove the old existing info, FIXME needs to update everyone
 
 		}else
 		{
-			this.log.debug("The IPC process("  +  ipcName + "/" + ipcInstance + ")is  a new  member.");
+			this.log.debug("The IPC process("  +  ipcName + "/" + ipcInstance + ")is  a new  member with address " +  rinaAddr);
 		}
 
 

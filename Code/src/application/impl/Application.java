@@ -251,6 +251,22 @@ public class Application extends Thread {
 	{
 		this.ipcManager.addIPC(ipc);
 	}
+	
+	public void removeIPC(IPCImpl ipc)
+	{
+		String ipcName = ipc.getIPCName();
+		String ipcInstance = ipc.getIPCInstance();
+		
+		this.removeIPC(ipcName,ipcInstance);
+	}
+	
+	
+	public void removeIPC(String ipcName, String ipcInstance)
+	{
+		
+		this.ipcManager.removeIPC(ipcName, ipcInstance);
+	
+	}
 
 	public IPCResourceManagerImpl getIpcManager() {
 		return ipcManager;

@@ -130,6 +130,29 @@ public class IPCResourceManagerImpl implements IPCResourceManager {
 	public synchronized void removeIPC(String IPCName, String IPCInstance)
 	{	
 		this.underlyingDIFsInfo.removeIPC(IPCName, IPCInstance);
+
+		//check all existing flows, if it is using this IPC process, remove that handle
+		
+		
+		int totalHandleNumber = this.handleMap.size();
+		
+		Object[] keyArray = this.handleMap.keySet().toArray();
+		
+		for(int i = 0; i < totalHandleNumber; i++)
+		{
+			int handleID = Integer.parseInt(keyArray[i].toString());
+			
+			HandleEntry he = this.handleMap.get(handleID);
+			
+			he.print();
+			
+			if(he.getUnderlyingIPCName().equals(IPCName) && he.getUnderlyingIPCInstance().equals(IPCInstance))
+			{
+				this.deallocate(handleID);
+			}
+		}
+		
+		this.log.debug("IPC " + IPCName + "/" + IPCInstance + " removed ");
 	}
 
 
@@ -249,7 +272,7 @@ public class IPCResourceManagerImpl implements IPCResourceManager {
 	private synchronized int dynamicDIFFormation(String srcApName, String srcApInstance, String dstApName, String dstApInstance) {
 
 		this.log.debug("Dynamic DIF Formation is called, [srcApName/srcApInstance/dstApName/dstApInstance]: " 
-		+  srcApName + "/" + srcApInstance + "/" + dstApName + "/" + dstApInstance);
+				+  srcApName + "/" + srcApInstance + "/" + dstApName + "/" + dstApInstance);
 
 		int success = -1;
 
@@ -282,7 +305,7 @@ public class IPCResourceManagerImpl implements IPCResourceManager {
 		//Note: not to the Management AE of relay application, the handle just to relay application
 		int handleToRelayAp = this.allocateFlow(srcApName,srcApInstance, "Management", "1",
 				relayApName, relayApInstance, "", "");
-		
+
 		this.log.debug("handle to relay app: " + relayApName + "/" + relayApInstance  + " is  " + handleToRelayAp);
 
 		//send a CDAP message M_CREATE to relay app to form the DIF, and fork and IPC to joins the DIF
@@ -526,10 +549,20 @@ public class IPCResourceManagerImpl implements IPCResourceManager {
 
 
 
-	//TODO
+
 	public synchronized void deallocate(int handleID) {
 
+		this.log.debug("dellocate is called to remove handle with ID " +  handleID);
+		
+		HandleEntry he = this.handleMap.get(handleID);
+				
+		this.handleMap.remove(handleID);
+		
+		String key = he.getKey();
+		
+		this.existingHandle.remove(key);
 
+		this.log.debug("handle " +  handleID + " removed");
 	}
 
 
